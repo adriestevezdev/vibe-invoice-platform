@@ -1,0 +1,7 @@
+fastapi[standard]==0.115.12
+sqlalchemy==2.0.35
+psycopg2-binary==2.9.9
+pydantic==2.10.2
+pydantic[email]==2.10.2
+python-multipart>=0.0.18
+uvicorn[standard]==0.32.1

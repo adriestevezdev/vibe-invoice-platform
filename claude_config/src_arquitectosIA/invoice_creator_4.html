@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Institution Invoice Creator</title>
+    <style>
+        /* Financial Institution Theme - Trust-building professional design */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            font-weight: 500;
+        }
+
+        .invoice-creator {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            min-height: 800px;
+        }
+
+        /* Security Header */
+        .security-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .security-icon {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .encryption-status {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Main Creation Area */
+        .creation-area {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .quick-btn:hover {
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-color: #94a3b8;
+            transform: translateY(-1px);
+        }
+
+        .quick-btn.active {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        /* Client Entry Section */
+        .section {
+            margin-bottom: 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-icon {
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .quick-add-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-add-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-select {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Items Section */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .items-table th,
+        .items-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .items-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.9rem;
+        }
+
+        .item-input {
+            border: none;
+            background: transparent;
+            font-size: 0.9rem;
+            padding: 0.25rem;
+            width: 100%;
+        }
+
+        .item-input:focus {
+            outline: 2px solid #3b82f6;
+            outline-offset: 1px;
+            border-radius: 4px;
+        }
+
+        .add-item-row {
+            background: #f0f9ff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .add-item-row:hover {
+            background: #e0f2fe;
+        }
+
+        /* Live Preview Sidebar */
+        .preview-sidebar {
+            background: #f8fafc;
+            border-left: 1px solid #e2e8f0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .preview-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-subtitle {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* Invoice Preview */
+        .invoice-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 2rem;
+            flex: 1;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .company-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+
+        .invoice-details {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .invoice-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .client-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .client-details h4 {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .preview-table {
+            width: 100%;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .preview-table th,
+        .preview-table td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .preview-table th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .total-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .total-row.final {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1e40af;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .secondary-btn {
+            background: white;
+            color: #374151;
+            border: 2px solid #d1d5db;
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .secondary-btn:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: #059669;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .invoice-creator {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-sidebar {
+                border-left: none;
+                border-top: 1px solid #e2e8f0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+            
+            .quick-actions {
+                flex-direction: column;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Trust-building micro-animations */
+        .secure-animation {
+            animation: secureGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes secureGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Invoice Creator - Financial Institution Theme</h1>
+        <p class="subtitle">Bank-Grade Security • Lightning-Fast Generation • Professional Excellence</p>
+        
+        <div class="invoice-creator secure-animation">
+            <!-- Security Header -->
+            <div class="security-header">
+                <div class="security-badge">
+                    <div class="security-icon">🔒</div>
+                    <span>256-bit SSL Encrypted</span>
+                </div>
+                <div class="encryption-status">
+                    All data transmitted securely • GDPR Compliant • SOC 2 Certified
+                </div>
+            </div>
+
+            <!-- Main Creation Area -->
+            <div class="creation-area">
+                <!-- Quick Action Modes -->
+                <div class="quick-actions">
+                    <div class="quick-btn active" data-mode="express">⚡ Express Invoice</div>
+                    <div class="quick-btn" data-mode="template">📋 From Template</div>
+                    <div class="quick-btn" data-mode="recurring">🔄 Recurring Setup</div>
+                    <div class="quick-btn" data-mode="project">📊 Project Billing</div>
+                </div>
+
+                <!-- Client Entry Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <span class="section-icon">👤</span>
+                            Client Information
+                        </h3>
+                        <button class="quick-add-btn" onclick="quickAddClient()">+ Quick Add</button>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="clientSelect">Select Client</label>
+                            <select class="form-select" id="clientSelect" onchange="loadClientData()">
+                                <option value="">Choose existing client...</option>
+                                <option value="acme">Acme Corporation</option>
+                                <option value="techstart">TechStart Inc.</option>
+                                <option value="globalcorp">Global Corp Ltd.</option>
+                                <option value="new">+ Add New Client</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="clientName">Company Name</label>
+                            <input type="text" class="form-input" id="clientName" placeholder="Enter company name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="clientEmail">Email Address</label>
+                            <input type="email" class="form-input" id="clientEmail" placeholder="billing@company.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="paymentTerms">Payment Terms</label>
+                            <select class="form-select" id="paymentTerms">
+                                <option value="net15">Net 15 days</option>
+                                <option value="net30" selected>Net 30 days</option>
+                                <option value="net60">Net 60 days</option>
+                                <option value="immediate">Due immediately</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <span class="section-icon">📋</span>
+                            Invoice Items
+                        </h3>
+                        <button class="quick-add-btn" onclick="addCommonItem()">+ Common Items</button>
+                    </div>
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Tax</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="itemsTableBody">
+                            <tr>
+                                <td><input type="text" class="item-input" placeholder="Consulting Services" value="Web Development Services" onkeyup="calculateRow(this)"></td>
+                                <td><input type="number" class="item-input" placeholder="1" value="40" onkeyup="calculateRow(this)"></td>
+                                <td><input type="number" class="item-input" placeholder="0.00" value="125.00" onkeyup="calculateRow(this)"></td>
+                                <td>
+                                    <select class="item-input" onchange="calculateRow(this)">
+                                        <option value="0">No Tax</option>
+                                        <option value="0.10" selected>10% VAT</option>
+                                        <option value="0.20">20% VAT</option>
+                                    </select>
+                                </td>
+                                <td class="item-total">$5,500.00</td>
+                                <td><button onclick="removeRow(this)" style="background:none;border:none;color:#ef4444;cursor:pointer;">❌</button></td>
+                            </tr>
+                            <tr class="add-item-row" onclick="addNewRow()">
+                                <td colspan="6" style="text-align:center;color:#64748b;font-weight:600;">+ Click to add new item</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Quick Calculation & Discount Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <span class="section-icon">💰</span>
+                            Calculations & Adjustments
+                        </h3>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="discount">Discount (%)</label>
+                            <input type="number" class="form-input" id="discount" placeholder="0" value="5" onkeyup="calculateTotals()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="currency">Currency</label>
+                            <select class="form-select" id="currency" onchange="calculateTotals()">
+                                <option value="USD" selected>USD ($)</option>
+                                <option value="EUR">EUR (€)</option>
+                                <option value="GBP">GBP (£)</option>
+                                <option value="CAD">CAD ($)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="notes">Payment Instructions</label>
+                            <input type="text" class="form-input" id="notes" placeholder="Bank transfer preferred" value="Wire transfer to account ending in 4567">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Preview Sidebar -->
+            <div class="preview-sidebar">
+                <div class="preview-header">
+                    <h3 class="preview-title">Live Preview</h3>
+                    <p class="preview-subtitle">Updates automatically as you type</p>
+                </div>
+
+                <div class="invoice-preview">
+                    <div class="invoice-header">
+                        <div class="company-info">
+                            <h3>Your Company</h3>
+                            <p>123 Business Street<br>
+                            City, State 12345<br>
+                            (555) 123-4567</p>
+                        </div>
+                        <div class="invoice-details">
+                            <div class="invoice-number">Invoice #2024-001</div>
+                            <div>Date: January 15, 2024</div>
+                            <div>Due: February 14, 2024</div>
+                        </div>
+                    </div>
+
+                    <div class="client-details">
+                        <h4>Bill To:</h4>
+                        <div id="previewClientInfo">
+                            <strong>Acme Corporation</strong><br>
+                            billing@acmecorp.com<br>
+                            Payment Terms: Net 30 days
+                        </div>
+                    </div>
+
+                    <table class="preview-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="previewTableBody">
+                            <tr>
+                                <td>Web Development Services</td>
+                                <td>40</td>
+                                <td>$125.00</td>
+                                <td>$5,000.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="total-section">
+                        <div class="total-row">
+                            <span>Subtotal:</span>
+                            <span id="previewSubtotal">$5,000.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Tax (10%):</span>
+                            <span id="previewTax">$500.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Discount (5%):</span>
+                            <span id="previewDiscount">-$275.00</span>
+                        </div>
+                        <div class="total-row final">
+                            <span>Total Amount:</span>
+                            <span id="previewTotal">$5,225.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="primary-btn" onclick="generateAndSend()">
+                        🚀 Generate & Send Instantly
+                    </button>
+                    <button class="secondary-btn" onclick="generatePDF()">
+                        📄 Generate PDF Only
+                    </button>
+                    <button class="secondary-btn" onclick="saveTemplate()">
+                        💾 Save as Template
+                    </button>
+                    <button class="secondary-btn" onclick="scheduleInvoice()">
+                        ⏰ Schedule Delivery
+                    </button>
+                </div>
+
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    Auto-saving every 30 seconds
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Financial Institution Theme - Professional, secure, and efficient
+        
+        // Auto-calculation system
+        function calculateRow(element) {
+            const row = element.closest('tr');
+            const qty = parseFloat(row.querySelector('input[type="number"]').value) || 0;
+            const rate = parseFloat(row.querySelectorAll('input[type="number"]')[1].value) || 0;
+            const taxRate = parseFloat(row.querySelector('select').value) || 0;
+            
+            const subtotal = qty * rate;
+            const tax = subtotal * taxRate;
+            const total = subtotal + tax;
+            
+            row.querySelector('.item-total').textContent = `$${total.toFixed(2)}`;
+            
+            calculateTotals();
+            updatePreview();
+        }
+
+        function calculateTotals() {
+            let subtotal = 0;
+            let totalTax = 0;
+            
+            document.querySelectorAll('#itemsTableBody tr:not(.add-item-row)').forEach(row => {
+                const qty = parseFloat(row.querySelector('input[type="number"]').value) || 0;
+                const rate = parseFloat(row.querySelectorAll('input[type="number"]')[1].value) || 0;
+                const taxRate = parseFloat(row.querySelector('select').value) || 0;
+                
+                const itemSubtotal = qty * rate;
+                const itemTax = itemSubtotal * taxRate;
+                
+                subtotal += itemSubtotal;
+                totalTax += itemTax;
+            });
+            
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+            const discountAmount = (subtotal + totalTax) * (discount / 100);
+            const total = subtotal + totalTax - discountAmount;
+            
+            // Update preview
+            document.getElementById('previewSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('previewTax').textContent = `$${totalTax.toFixed(2)}`;
+            document.getElementById('previewDiscount').textContent = `-$${discountAmount.toFixed(2)}`;
+            document.getElementById('previewTotal').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Quick client data loading
+        function loadClientData() {
+            const clientSelect = document.getElementById('clientSelect');
+            const clientName = document.getElementById('clientName');
+            const clientEmail = document.getElementById('clientEmail');
+            
+            const clients = {
+                'acme': {
+                    name: 'Acme Corporation',
+                    email: 'billing@acmecorp.com'
+                },
+                'techstart': {
+                    name: 'TechStart Inc.',
+                    email: 'accounts@techstart.com'
+                },
+                'globalcorp': {
+                    name: 'Global Corp Ltd.',
+                    email: 'finance@globalcorp.com'
+                }
+            };
+            
+            if (clients[clientSelect.value]) {
+                clientName.value = clients[clientSelect.value].name;
+                clientEmail.value = clients[clientSelect.value].email;
+                updatePreview();
+            } else if (clientSelect.value === 'new') {
+                clientName.value = '';
+                clientEmail.value = '';
+                clientName.focus();
+            }
+        }
+
+        // Update live preview
+        function updatePreview() {
+            const clientName = document.getElementById('clientName').value || 'Client Name';
+            const clientEmail = document.getElementById('clientEmail').value || 'client@email.com';
+            const paymentTerms = document.getElementById('paymentTerms').selectedOptions[0].textContent;
+            
+            document.getElementById('previewClientInfo').innerHTML = `
+                <strong>${clientName}</strong><br>
+                ${clientEmail}<br>
+                Payment Terms: ${paymentTerms}
+            `;
+        }
+
+        // Add new item row
+        function addNewRow() {
+            const tbody = document.getElementById('itemsTableBody');
+            const addRow = document.querySelector('.add-item-row');
+            
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="item-input" placeholder="Item description" onkeyup="calculateRow(this)"></td>
+                <td><input type="number" class="item-input" placeholder="1" onkeyup="calculateRow(this)"></td>
+                <td><input type="number" class="item-input" placeholder="0.00" onkeyup="calculateRow(this)"></td>
+                <td>
+                    <select class="item-input" onchange="calculateRow(this)">
+                        <option value="0">No Tax</option>
+                        <option value="0.10">10% VAT</option>
+                        <option value="0.20">20% VAT</option>
+                    </select>
+                </td>
+                <td class="item-total">$0.00</td>
+                <td><button onclick="removeRow(this)" style="background:none;border:none;color:#ef4444;cursor:pointer;">❌</button></td>
+            `;
+            
+            tbody.insertBefore(newRow, addRow);
+            newRow.querySelector('input').focus();
+        }
+
+        // Remove item row
+        function removeRow(button) {
+            button.closest('tr').remove();
+            calculateTotals();
+        }
+
+        // Quick add common items
+        function addCommonItem() {
+            const commonItems = [
+                { desc: 'Consulting Services', qty: 1, rate: 150.00 },
+                { desc: 'Web Development', qty: 1, rate: 125.00 },
+                { desc: 'Design Services', qty: 1, rate: 100.00 },
+                { desc: 'Project Management', qty: 1, rate: 85.00 }
+            ];
+            
+            const item = commonItems[Math.floor(Math.random() * commonItems.length)];
+            const tbody = document.getElementById('itemsTableBody');
+            const addRow = document.querySelector('.add-item-row');
+            
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="item-input" value="${item.desc}" onkeyup="calculateRow(this)"></td>
+                <td><input type="number" class="item-input" value="${item.qty}" onkeyup="calculateRow(this)"></td>
+                <td><input type="number" class="item-input" value="${item.rate}" onkeyup="calculateRow(this)"></td>
+                <td>
+                    <select class="item-input" onchange="calculateRow(this)">
+                        <option value="0">No Tax</option>
+                        <option value="0.10" selected>10% VAT</option>
+                        <option value="0.20">20% VAT</option>
+                    </select>
+                </td>
+                <td class="item-total">$${(item.qty * item.rate * 1.1).toFixed(2)}</td>
+                <td><button onclick="removeRow(this)" style="background:none;border:none;color:#ef4444;cursor:pointer;">❌</button></td>
+            `;
+            
+            tbody.insertBefore(newRow, addRow);
+            calculateTotals();
+        }
+
+        // Quick add client modal
+        function quickAddClient() {
+            const name = prompt('Client Company Name:');
+            const email = prompt('Client Email:');
+            
+            if (name && email) {
+                document.getElementById('clientName').value = name;
+                document.getElementById('clientEmail').value = email;
+                updatePreview();
+            }
+        }
+
+        // Action functions
+        function generateAndSend() {
+            // Simulate secure processing
+            const button = event.target;
+            button.innerHTML = '🔄 Processing Securely...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '✅ Sent Successfully!';
+                setTimeout(() => {
+                    button.innerHTML = '🚀 Generate & Send Instantly';
+                    button.disabled = false;
+                }, 2000);
+            }, 2000);
+        }
+
+        function generatePDF() {
+            alert('PDF generated successfully!\n\nSecure download link sent to your email.');
+        }
+
+        function saveTemplate() {
+            alert('Template saved to your secure template library!');
+        }
+
+        function scheduleInvoice() {
+            const date = prompt('Schedule delivery date (YYYY-MM-DD):');
+            if (date) {
+                alert(`Invoice scheduled for delivery on ${date}\n\nYou will receive a confirmation email.`);
+            }
+        }
+
+        // Mode switching
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Simulate mode switching
+                const mode = this.dataset.mode;
+                console.log(`Switched to ${mode} mode`);
+            });
+        });
+
+        // Auto-save simulation
+        setInterval(() => {
+            console.log('Auto-save completed');
+        }, 30000);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateTotals();
+            updatePreview();
+            
+            // Add smooth animations
+            document.querySelectorAll('.form-input, .form-select').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                    this.parentElement.style.transition = 'transform 0.2s ease';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
