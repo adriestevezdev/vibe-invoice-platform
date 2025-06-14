@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Header from '@/components/Header';
 
 // TypeScript interfaces
 interface InvoiceItem {
@@ -156,7 +157,9 @@ export default function InvoiceCreator() {
   const { subtotal, totalTax, discountAmount, total } = calculateTotals();
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-200 text-slate-800 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-200 text-slate-800">
+      <Header />
+      <main className="p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold text-slate-900 text-center mb-2 tracking-tight">
           Invoice Creator - Financial Institution Theme
@@ -533,6 +536,7 @@ export default function InvoiceCreator() {
           </div>
         </div>
       </div>
-    </main>
+      </main>
+    </div>
   );
 }
